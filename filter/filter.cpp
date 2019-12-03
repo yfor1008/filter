@@ -7,9 +7,10 @@
 // 交换算法
 // iDataA: input/output, 数据A
 // iDataB: input/output, 数据B
-void swap(int& iDataA, int& iDataB)
+template <typename T>
+void swap(T& iDataA, T& iDataB)
 {
-    int tmp;
+    T tmp;
     tmp = iDataA;
     iDataA = iDataB;
     iDataB = tmp;
@@ -21,7 +22,8 @@ void swap(int& iDataA, int& iDataB)
 // iDataSize: input, 数据长度
 // iIndex: input, 当前位置index
 // iHalfLen: input, 需要获取数据的长度的半径
-void GetData1D(int* iDataArr, int* iOutArr, int iDataSize, int iIndex, int iHalfLen)
+template <typename T>
+void GetData1D(T* iDataArr, T* iOutArr, int iDataSize, int iIndex, int iHalfLen)
 {
     iOutArr[iHalfLen] = iDataArr[iIndex]; // 中心直接为当前index的值
 
@@ -49,7 +51,8 @@ void GetData1D(int* iDataArr, int* iOutArr, int iDataSize, int iIndex, int iHalf
 // iDataSize: input, 数据长度
 // iIndex: input, 当前位置index
 // iHalfLen: input, 需要获取数据的长度的半径
-void GetData1D(std::vector<int> iDataArr, std::vector<int> &iOutArr, int iDataSize, int iIndex, int iHalfLen)
+template <typename T>
+void GetData1D(std::vector<T> iDataArr, std::vector<T>& iOutArr, int iDataSize, int iIndex, int iHalfLen)
 {
     iOutArr[iHalfLen] = iDataArr[iIndex]; // 中心直接为当前index的值
 
@@ -76,7 +79,8 @@ void GetData1D(std::vector<int> iDataArr, std::vector<int> &iOutArr, int iDataSi
 // iDataArr: input/output, 数据数组
 // iDataSize: input, 数据长度
 // bOrder: input, 排序顺序, 0-从高到低(升序), 1-从低到高(降序)
-void BubbleSort1D(int* iDataArr, int iDataSize, bool bOrder = 1)
+template <typename T>
+void BubbleSort1D(T* iDataArr, int iDataSize, bool bOrder = 1)
 {
     int i = 0, j = 0;
     for (i = 0; i < iDataSize; i++)
@@ -104,7 +108,8 @@ void BubbleSort1D(int* iDataArr, int iDataSize, bool bOrder = 1)
 // iDataArr: input/output, 数据数组
 // iDataSize: input, 数据长度
 // bOrder: input, 排序顺序, 0-从高到低(升序), 1-从低到高(降序)
-void BubbleSort1D(std::vector<int> &iDataArr, int iDataSize, bool bOrder = 1)
+template <typename T>
+void BubbleSort1D(std::vector<T>& iDataArr, int iDataSize, bool bOrder = 1)
 {
     int i = 0, j = 0;
     for (i = 0; i < iDataSize; i++)
@@ -134,11 +139,12 @@ void BubbleSort1D(std::vector<int> &iDataArr, int iDataSize, bool bOrder = 1)
 // iFiltered: output, 滤波后的数据
 // iDataSize: input, 数据长度
 // iHalfLen: input, 滤波窗口半径
-void MediumFilter1D(int* iDataArr, int* iFiltered, int iDataSize, int iHalfLen)
+template <typename T>
+void MediumFilter1D(T* iDataArr, T* iFiltered, int iDataSize, int iHalfLen)
 {
     int filter_size = iHalfLen * 2 + 1;
-    int* filter_data;
-    filter_data = (int*)calloc(filter_size, sizeof(int)); // 临时滤波窗口数据
+    T* filter_data;
+    filter_data = (T*)calloc(filter_size, sizeof(T)); // 临时滤波窗口数据
     for (int i = 0; i < iDataSize; i++)
     {
         GetData1D(iDataArr, filter_data, iDataSize, i, iHalfLen); // 获取当前窗口数据
@@ -152,10 +158,11 @@ void MediumFilter1D(int* iDataArr, int* iFiltered, int iDataSize, int iHalfLen)
 // iFiltered: output, 滤波后的数据
 // iDataSize: input, 数据长度
 // iHalfLen: input, 滤波窗口半径
-void MediumFilter1D(std::vector<int> iDataArr, std::vector<int> &iFiltered, int iDataSize, int iHalfLen)
+template <typename T>
+void MediumFilter1D(std::vector<T> iDataArr, std::vector<T>& iFiltered, int iDataSize, int iHalfLen)
 {
     int filter_size = iHalfLen * 2 + 1;
-    std::vector<int> filter_data(filter_size); // 临时滤波窗口数据
+    std::vector<T> filter_data(filter_size); // 临时滤波窗口数据
     for (int i = 0; i < iDataSize; i++)
     {
         GetData1D(iDataArr, filter_data, iDataSize, i, iHalfLen); // 获取当前窗口数据
@@ -170,14 +177,15 @@ void MediumFilter1D(std::vector<int> iDataArr, std::vector<int> &iFiltered, int 
 // iFiltered: output, 滤波后的数据
 // iDataSize: input, 数据长度
 // iHalfLen: input, 滤波窗口半径
-void MeanFilter1D(int* iDataArr, int* iFiltered, int iDataSize, int iHalfLen)
+template <typename T>
+void MeanFilter1D(T* iDataArr, T* iFiltered, int iDataSize, int iHalfLen)
 {
     int filter_size = iHalfLen * 2 + 1;
-    int* filter_data;
-    filter_data = (int*)calloc(filter_size, sizeof(int)); // 临时滤波窗口数据
+    T* filter_data;
+    filter_data = (T*)calloc(filter_size, sizeof(T)); // 临时滤波窗口数据
     for (int i = 0; i < iDataSize; i++)
     {
-        int mean_val = 0;
+        T mean_val = 0;
         GetData1D(iDataArr, filter_data, iDataSize, i, iHalfLen); // 获取当前窗口数据
         for (int j = 0; j < filter_size; j++) // 计算均值
         {
@@ -193,13 +201,14 @@ void MeanFilter1D(int* iDataArr, int* iFiltered, int iDataSize, int iHalfLen)
 // iFiltered: output, 滤波后的数据
 // iDataSize: input, 数据长度
 // iHalfLen: input, 滤波窗口半径
-void MeanFilter1D(std::vector<int> iDataArr, std::vector<int> &iFiltered, int iDataSize, int iHalfLen)
+template <typename T>
+void MeanFilter1D(std::vector<T> iDataArr, std::vector<T>& iFiltered, int iDataSize, int iHalfLen)
 {
     int filter_size = iHalfLen * 2 + 1;
-    std::vector<int> filter_data(filter_size);
+    std::vector<T> filter_data(filter_size);
     for (int i = 0; i < iDataSize; i++)
     {
-        int mean_val = 0;
+        T mean_val = 0;
         GetData1D(iDataArr, filter_data, iDataSize, i, iHalfLen); // 获取当前窗口数据
         for (int j = 0; j < filter_size; j++) // 计算均值
         {
@@ -235,7 +244,10 @@ int test1()
         }
         printf("\n");
     }
-    free(cur_data);
+    if (cur_data)
+    {
+        free(cur_data);
+    }
 
     // test MediumFilter1D/MeanFilter1D
     int* filtered;
@@ -247,7 +259,10 @@ int test1()
         printf("%d, ", filtered[i]);
     }
     printf("\n");
-    free(filtered);
+    if (filtered)
+    {
+        free(filtered);
+    }
 
     printf("test1 down!\n");
     return 0;
